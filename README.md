@@ -18,7 +18,7 @@ To get a local copy up and running follow these steps.
 
 ### Setup
 - On your local computer:
-    - [Linux] Open a command terminal
+    - [Linux] Open a command line terminal
     - [Windows] Open a Git Bash terminal
 - Create a working directory, and from this directory clone the application code:
     - git clone git@github.com:pedromartinez079/OpenAI-WebInterface.git
@@ -27,7 +27,8 @@ To get a local copy up and running follow these steps.
     - [Linux] sudo docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
     - [Windows] docker pull mongodb/mongodb-community-server:latest
     - [Windows] docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
-- Create a ".env" file where the Open AI API key will be stored:
+- For Windows, if docker commands fail try to use Windows CMD command line instead of Git Bash
+- Create a ".env" file for environment variables:
     - OPENAI_API_KEY=[The_API_KEY_from_Open_AI]
     - MONGODB_IP=[Local_computer_IP_address]
     - MONGODB_PORT=27017
@@ -35,7 +36,7 @@ To get a local copy up and running follow these steps.
 ### Install
 - Create an image for Docker:
     - [Linux] sudo docker built -t openai-webinterface:0.0.1 .
-    - [Windows] docker built -t openai-webinterface .
+    - [Windows] docker built -t openai-webinterface:0.0.1 .
 - Create and Run a container for the application:
     - [Linux] sudo docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
     - [Windows] docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
@@ -43,10 +44,22 @@ To get a local copy up and running follow these steps.
 ### Usage
 - Open a web browser http://[Local_computer_IP_address]:3000
 - The application will give you acces to ChatGPT (text) and Dalle (images). For both create a prompt in the message box and send it. Wait for Open AI answer. You can save chat messages and you can load old saved messages
-- For ChatGPT you can select a model (o1, o3, gpt), also you can set some parameters such us "temperature" and "top_P" (only for gpt models), and "reasoning_effort" (only for o1 and o3-mini models).
-- For Open AI Assistants, you can create and modify assistants and you can attach files.
-- For an Assistant you can set up tools, tool resources and metadata. To interact with the assistant, first create a Thread, and go to Thread page by a click on Thread ID.
-- On Thread page, create a message, send it and make a run or execute thread. Wait for assistant answer.
+- For ChatGPT you can select a model (o1, o3, gpt), also you can set some parameters such us "temperature" and "top_P" (only for gpt models), and "reasoning_effort" (only for o1 and o3-mini models)
+- For Open AI Assistants, you can create and modify assistants and you can attach files
+- For an Assistant you can set up tools, tool resources and metadata. To interact with the assistant, first create a Thread, and go to Thread page by a click on Thread ID
+- On Thread page, create a message, send it and make a run or execute thread. Wait for assistant answer
+- Stop OpenAI WebInterface appplication: 
+    - Open a Linux command line terminal or a Git Bash terminal or a Windows CMD
+    - [Linux] sudo docker stop openaiwebinterface
+    - [Linux] sudo docker stop mongodb
+    - [Windows] docker stop openaiwebinterface
+    - [Windows] docker stop mongodb
+- Start OpenAI WebInterface appplication: 
+    - Open a Linux command line terminal or a Git Bash terminal or a Windows CMD
+    - [Linux] sudo docker start mongodb
+    - [Linux] sudo docker start openaiwebinterface
+    - [Windows] docker start mongodb
+    - [Windows] docker start openaiwebinterface
 
 ## Authors
 
@@ -66,12 +79,6 @@ Feel free to check the [issues page](issues/).
 
 Give a ⭐️ if you like this project!
 
-## Acknowledgments
-
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
-
 ## 📝 License
 
-This project is [MIT](lic.url) licensed.
+This project is [GNU GPLv3](COPYING) licensed.

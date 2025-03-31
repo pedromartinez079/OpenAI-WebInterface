@@ -182,7 +182,8 @@ export default function Assistant(props) {
           setThreadList(responseThreads.data.threads);
           // console.log(responseThreads.data);
         } catch (error) {
-          setError(error);
+          setResponseMessage('MongoDB sin información de Threads: ' + error.response.data.message);
+          // console.log(error);
         }
       };
 
@@ -214,7 +215,7 @@ export default function Assistant(props) {
 
     if (loading) return <div>Loading...</div>;
     //console.log(data);
-    if (error) return <div>Error: {JSON.stringify(error)}</div>;
+    if (error) return <div>Error: {JSON.stringify(error.message)}</div>;
     
     return (
         <div className="container mt-2 mb-2">
@@ -235,13 +236,14 @@ export default function Assistant(props) {
             />
             <div>
               <label className="h6">Threads:</label>
+              { threadList !== null &&
               <ul className="list-group" id="threads_list">
                 {threadList.map((thr, index) => (
                   <li key={index} className="list-group-item" onClick={() => gotoThread(thr.threadid)}>
                     <pre>{thr.threadid}</pre>
                   </li>
                 ))}
-              </ul>
+              </ul>}
             </div>            
         </div>
 

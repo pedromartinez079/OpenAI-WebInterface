@@ -8,7 +8,7 @@
 - Code-Server, VS Code for web browser
 
 ## Getting Started
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these steps.
 
 ### Prerequisites
 - Get an [Open AI account and an API key](https://platform.openai.com/docs/overview)
@@ -17,14 +17,16 @@ To get a local copy up and running follow these simple example steps.
 - For Windows: Install [Git for Windows](https://gitforwindows.org/)
 
 ### Setup
-- On your local computer for Linux open a command terminal, or for Windows open a Git Bash terminal.
+- On your local computer:
+    - [Linux] Open a command terminal
+- [Windows] Open a Git Bash terminal
 - Create a working directory, and from this directory clone the application code:
--- git clone git@github.com:pedromartinez079/OpenAI-WebInterface.git
+- git clone git@github.com:pedromartinez079/OpenAI-WebInterface.git
 - Create and Run a container for database MongoDB:
--- [Linux] sudo docker pull mongodb/mongodb-community-server:latest
--- [Linux] sudo docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
--- [Windows] docker pull mongodb/mongodb-community-server:latest
--- [Windows] docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
+- [Linux] sudo docker pull mongodb/mongodb-community-server:latest
+- [Linux] sudo docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
+- [Windows] docker pull mongodb/mongodb-community-server:latest
+- [Windows] docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
 - Create a ".env" file where the Open AI API key will be stored:
 OPENAI_API_KEY=[The_API_KEY_from_Open_AI]
 MONGODB_IP=[Local_computer_IP_address]
@@ -32,11 +34,11 @@ MONGODB_PORT=27017
 
 ### Install
 - Create an image for Docker:
--- [Linux] sudo docker built -t openai-webinterface:0.0.1 .
--- [Windows] docker built -t openai-webinterface .
+- [Linux] sudo docker built -t openai-webinterface:0.0.1 .
+- [Windows] docker built -t openai-webinterface .
 - Create and Run a container for the application:
--- [Linux] sudo docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
--- [Windows] docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
+- [Linux] sudo docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
+- [Windows] docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
 
 ### Usage
 - Open a web browser with this URL: http://[Local_computer_IP_address]:3000

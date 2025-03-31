@@ -19,29 +19,29 @@ To get a local copy up and running follow these steps.
 ### Setup
 - On your local computer:
     - [Linux] Open a command terminal
-- [Windows] Open a Git Bash terminal
+    - [Windows] Open a Git Bash terminal
 - Create a working directory, and from this directory clone the application code:
-- git clone git@github.com:pedromartinez079/OpenAI-WebInterface.git
+    - git clone git@github.com:pedromartinez079/OpenAI-WebInterface.git
 - Create and Run a container for database MongoDB:
-- [Linux] sudo docker pull mongodb/mongodb-community-server:latest
-- [Linux] sudo docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
-- [Windows] docker pull mongodb/mongodb-community-server:latest
-- [Windows] docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
+    - [Linux] sudo docker pull mongodb/mongodb-community-server:latest
+    - [Linux] sudo docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
+    - [Windows] docker pull mongodb/mongodb-community-server:latest
+    - [Windows] docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest
 - Create a ".env" file where the Open AI API key will be stored:
-OPENAI_API_KEY=[The_API_KEY_from_Open_AI]
-MONGODB_IP=[Local_computer_IP_address]
-MONGODB_PORT=27017
+    - OPENAI_API_KEY=[The_API_KEY_from_Open_AI]
+    - MONGODB_IP=[Local_computer_IP_address]
+    - MONGODB_PORT=27017
 
 ### Install
 - Create an image for Docker:
-- [Linux] sudo docker built -t openai-webinterface:0.0.1 .
-- [Windows] docker built -t openai-webinterface .
+    - [Linux] sudo docker built -t openai-webinterface:0.0.1 .
+    - [Windows] docker built -t openai-webinterface .
 - Create and Run a container for the application:
-- [Linux] sudo docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
-- [Windows] docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
+    - [Linux] sudo docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
+    - [Windows] docker run -d -p 3000:3000 --env-file .env --name openaiwebinterface openai-webinterface:0.0.1
 
 ### Usage
-- Open a web browser with this URL: http://[Local_computer_IP_address]:3000
+- Open a web browser http://[Local_computer_IP_address]:3000
 - The application will give you acces to ChatGPT (text) and Dalle (images). For both create a prompt in the message box and send it. Wait for Open AI answer. You can save chat messages and you can load old saved messages
 - For ChatGPT you can select a model (o1, o3, gpt), also you can set some parameters such us "temperature" and "top_P" (only for gpt models), and "reasoning_effort" (only for o1 and o3-mini models).
 - For Open AI Assistants, you can create and modify assistants and you can attach files.

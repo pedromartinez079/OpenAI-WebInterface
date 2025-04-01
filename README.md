@@ -1,4 +1,4 @@
-# OpenAi WebInterface
+# OpenAi-WebInterface
 **Web interface to interact with Open AI tool such us ChatGPT, Dalle and Open AI Assistants.**
 
 ## Built With
@@ -13,8 +13,7 @@ To get a local copy up and running follow these steps.
 ### Prerequisites
 - Get an [Open AI account and an API key](https://platform.openai.com/docs/overview)
 - For Linux: Install [Docker](https://docs.docker.com/desktop/setup/install/linux/)
-- For Windows: Install [Docker](https://docs.docker.com/desktop/setup/install/windows-install/)
-- For Windows: Install [Git for Windows](https://gitforwindows.org/)
+- For Windows: Install [Docker](https://docs.docker.com/desktop/setup/install/windows-install/) & [Git for Windows](https://gitforwindows.org/)
 
 ### Setup
 - On your local computer:

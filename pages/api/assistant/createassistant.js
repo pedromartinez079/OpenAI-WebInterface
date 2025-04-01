@@ -39,24 +39,5 @@ export default async function handler(req, res) {
 
 
 /*
-curl -X POST http://192.168.0.101:3001/api/createassistant \
-     -H "Content-Type: application/json" \
-     -d '{"model": "gpt-4o", "name": "test", "instructions": "eres una prueba de un asistente", "tools": [], "tool_resources": {}}'
-
-API:
-- createassistant #Files-> tool_resources: { code_interpreter:{file_ids:[...]}, file_search:{vector_store_ids:[...]} }
-- uploadfile  # purpose = assistants
-- createthread
-- runthread
-- listthreadruns
-- retrievethreadrun
-- listfiles
-- retrievefile
-- listthreadmessages
-- createthreadmessage, runthread, listthreadmessages
-
-#To Do:
-UIX > Tabs for create assistant, interact with assistant (threads, runs, messages, files, outputs), List threads and runs
-(nav or nav-tabs) & nav-item
-Use of Streaming for Create Thread and runs
+ToDo:
 */

@@ -23,8 +23,8 @@ EXPOSE 3000
 CMD ["npm", "start"]
 
 # Image
-# sudo docker build -t pedromartinez079/chatgpt-nextjs:0.0.1 .
+# sudo docker build -t openai-webinterface:0.0.1 .
 
 # Container
-# sudo docker run -d -rm -p 3000:3000 --env-file /home/qullqi/environments/.information4chatgpt --name chatgpt pedromartinez079/chatgpt-nextjs:0.0.1
-# sudo docker run -d -p 3000:3000 --env-file /home/qullqi/environments/.information4chatgpt --name chatgpt pedromartinez079/chatgpt-nextjs:0.0.1
+# sudo docker run -d -rm -p 3000:3000 --env-file .env --name openai-webinterface openai-webinterface:0.0.1
+# sudo docker run -d -p 3000:3000 --env-file .env --name openai-webinterface openai-webinterface:0.0.1

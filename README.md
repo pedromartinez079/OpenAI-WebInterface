@@ -20,7 +20,7 @@ To get a local copy up and running follow these steps.
     - [Linux] Open a command line terminal
     - [Windows] Open a Git Bash terminal
 - Create a working directory, and from this directory clone the application code:
-    - git clone git@github.com:pedromartinez079/OpenAI-WebInterface.git
+    - git clone https://github.com/pedromartinez079/OpenAI-WebInterface.git
 - Create and Run a container for database MongoDB:
     - [Linux] sudo docker pull mongodb/mongodb-community-server:latest
     - [Linux] sudo docker run --name mongodb -p 27017:27017 -d mongodb/mongodb-community-server:latest

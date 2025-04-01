@@ -43,7 +43,8 @@ To get a local copy up and running follow these steps.
 
 ### Usage
 - Open a web browser http://[Local_computer_IP_address]:3000
-- The application will give you acces to ChatGPT (text) and Dalle (images). For both create a prompt in the message box and send it. Wait for Open AI answer. You can save chat messages and you can load old saved messages
+- The application will give you acces to ChatGPT (text) and Dalle (images). For both create a prompt in the message box and send it. Wait for Open AI answer. Please double-click on OpenAI answer to get a better format for contents
+- You can save chat messages and you can load old saved messages
 - For ChatGPT you can select a model (o1, o3, gpt), also you can set some parameters such us "temperature" and "top_P" (only for gpt models), and "reasoning_effort" (only for o1 and o3-mini models)
 - For Open AI Assistants, you can create and modify assistants and you can attach files
 - For an Assistant you can set up tools, tool resources and metadata. To interact with the assistant, first create a Thread, and go to Thread page by a click on Thread ID

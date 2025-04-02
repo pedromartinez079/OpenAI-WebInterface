@@ -49,13 +49,13 @@ To get a local copy up and running follow these steps.
 - For Open AI Assistants, you can create and modify assistants and you can attach files
 - For an Assistant you can set up tools, tool resources and metadata. To interact with the assistant, first create a Thread, and go to Thread page by a click on Thread ID
 - On Thread page, create a message, send it and make a run or execute thread. Wait for assistant answer
-- Stop OpenAI WebInterface appplication: 
+- Stop OpenAI WebInterface application: 
     - Open a Linux command line terminal or a Git Bash terminal or a Windows CMD
     - [Linux] sudo docker stop openaiwebinterface
     - [Linux] sudo docker stop mongodb
     - [Windows] docker stop openaiwebinterface
     - [Windows] docker stop mongodb
-- Start OpenAI WebInterface appplication: 
+- Start OpenAI WebInterface application: 
     - Open a Linux command line terminal or a Git Bash terminal or a Windows CMD
     - [Linux] sudo docker start mongodb
     - [Linux] sudo docker start openaiwebinterface

@@ -1,5 +1,5 @@
 # OpenAi-WebInterface
-**Web interface to interact with Open AI tool such us ChatGPT, Dalle and Open AI Assistants.**
+**Web interface to interact with Open AI tools such us ChatGPT, Dalle and Open AI Assistants.**
 
 ## Built With
 - JavaScript,

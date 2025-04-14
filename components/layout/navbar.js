@@ -64,6 +64,8 @@ export default function NavBar(props) {
                                 <option value="o3-mini">o3-mini</option>
                                 <option value="gpt-4o">gpt-4o</option>
                                 <option value="gpt-4o-mini">gpt-4o-mini</option>
+                                <option value="gpt-4o-mini-search-preview">gpt-4o-mini-search-preview</option>
+                                <option value="gpt-4o-search-preview">gpt-4o-search-preview</option>
                                 <option value="gpt-4-turbo">gpt-4-turbo</option>
                                 <option value="gpt-4.5-preview">gpt-4.5-preview</option>
                             </select> )

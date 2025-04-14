@@ -15,6 +15,11 @@ export default async function handler(req, res) {
 
         if (model === 'o1-preview' || model === 'o1-mini') { temperature = 1; topP = undefined; }
 
+        if (model === 'gpt-4o-mini-search-preview' || model === 'gpt-4o-search-preview') {
+          temperature = undefined;
+          topP = undefined;
+        }
+
         // console.log(model, temperature, topP);
         
         try {

@@ -54,5 +54,17 @@ export default async function handler(req, res) {
 }
 
 /*
+To Do:
+o1-pro -> only responses, no chat
+curl https://api.openai.com/v1/responses \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $OPENAI_API_KEY" \
+  -d '{
+    "model": "o1-pro",
+    "input": "Tell me a three sentence bedtime story about a unicorn."
+  }'
 
+https://platform.openai.com/docs/api-reference/responses/create
+
+Add a link item to navbar -> Responses (similar a Dall-E)
 */

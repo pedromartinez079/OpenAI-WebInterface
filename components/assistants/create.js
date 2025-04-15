@@ -147,7 +147,9 @@ export default function CreateAssistant(props) {
               <option value="gpt-4o">gpt-4o</option>
               <option value="gpt-4o-mini">gpt-4o-mini</option>
               <option value="gpt-4-turbo">gpt-4-turbo</option>
-              <option value="gpt-4.5-preview">gpt-4.5-preview</option>
+              <option value="gpt-4.1">gpt-4.1</option>
+              <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+              <option value="gpt-4.1-nano">gpt-4.1-nano</option>
               <option value="o1">o1</option>
               <option value="o3-mini">o3-mini</option>
               {/* Add more model options here if needed */}

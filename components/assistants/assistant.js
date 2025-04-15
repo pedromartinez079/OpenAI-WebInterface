@@ -59,7 +59,7 @@ export default function Assistant(props) {
       //console.log('Modify assistant:', nameF, modelF, instructionsF, toolsF, toolresourcesF, metadataF);
       
       try {
-        let models = ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-4.5-preview', 'o1', 'o3-mini'];
+        let models = ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-4.1', 'gpt-4.1-mini', 'gpt-4.1-nano', 'o1', 'o3-mini'];
         if (!models.includes(modelF)) {
           throw new Error('Modelo incorrecto.');
         }

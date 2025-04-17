@@ -97,4 +97,7 @@ Tab list:
     Files
 
 To DO:
+  Vector Store
+    https://platform.openai.com/docs/api-reference/vector-stores
+    https://platform.openai.com/docs/api-reference/vector-stores-files
 */

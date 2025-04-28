@@ -2,11 +2,11 @@ import axios from 'axios';
 
 export default async function handler(req, res) {
     if (req.method === 'POST') {
-        const assistantid = req.body.assistantid;
+        const responseid = req.body.responseid;
         const OPENAI_API_KEY = process.env.OPENAI_API_KEY
 
         try {
-            const response = await axios.delete(`https://api.openai.com/v1/assistants/${assistantid}`, {
+            const response = await axios.delete(`https://api.openai.com/v1/responses/${responseid}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${OPENAI_API_KEY}`,
@@ -19,8 +19,8 @@ export default async function handler(req, res) {
             res.status(200).json(data.data);
             return;      
         } catch (error) {
-            console.error({message: 'Error communicating with OpenAI from /api/assistant/deleteassistant.js', error: error.response.data});
-            res.status(400).json({message: 'Error communicating with OpenAI from /api/assistant/deleteassistant.js', error: error.response.data});
+            console.error({message: 'Error communicating with OpenAI from /api/response/deleteresponse.js', error: error.response.data});
+            res.status(400).json({message: 'Error communicating with OpenAI from /api/response/deleteresponse.js', error: error.response.data});
             return;            
         }
     }

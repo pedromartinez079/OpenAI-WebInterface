@@ -23,8 +23,8 @@ export default async function handler(req, res) {
             res.status(200).json(data.data);
             return;      
         } catch (error) {
-            console.error({message: 'Error communicating with OpenAI from /api/modifythread.js', error: error.response.data});
-            res.status(400).json({message: 'Error communicating with OpenAI from /api/modifythread.js', error: error.response.data});
+            console.error({message: 'Error communicating with OpenAI from /api/thread/modifythread.js', error: error.response.data});
+            res.status(400).json({message: 'Error communicating with OpenAI from /api/thread/modifythread.js', error: error.response.data});
             return;            
         }
     }

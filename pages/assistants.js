@@ -1,3 +1,6 @@
+import { Fragment } from 'react';
+import Head from "next/head";
+
 import React, { useState } from 'react';
 
 import CreateAssistant from '@/components/assistants/create';
@@ -30,53 +33,61 @@ export default function Assistants(props) {
     };
     
     return (
-        <div>
-            <ul className="nav nav-tabs">
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === 'newassistant' ? 'active' : ''}`} 
-                        onClick={() => setActiveTab('newassistant')}
-                    >
-                        Crear Asistente
-                    </button>
-                </li>
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === 'list' ? 'active' : ''}`} 
-                        onClick={() => setActiveTab('list')}
-                    >
-                        Lista de Asistentes
-                    </button>
-                </li>
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === 'assistant' ? 'active' : ''}`} 
-                        onClick={() => setActiveTab('assistant')}
-                    >
-                        Usar Asistente
-                    </button>
-                </li>
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === 'thread' ? 'active' : ''}`} 
-                        onClick={() => setActiveTab('thread')}
-                    >
-                        Usar Thread
-                    </button>
-                </li>
-                <li className="nav-item">
-                    <button 
-                        className={`nav-link ${activeTab === 'files' ? 'active' : ''}`} 
-                        onClick={() => setActiveTab('files')}
-                    >
-                        Archivos
-                    </button>
-                </li>
-            </ul>
-            <div className="tab-content mt-3">
-                {renderContent()}
+        <Fragment>
+            <Head>
+                <title>Asistentes o Agentes</title>
+                <meta name="Open AI" content="Open AI assistants, threads, runs, messages, tools"/>
+                <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+                <link rel="icon" href="#" sizes="any" />
+            </Head>
+            <div>
+                <ul className="nav nav-tabs">
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === 'newassistant' ? 'active' : ''}`} 
+                            onClick={() => setActiveTab('newassistant')}
+                        >
+                            Crear Asistente
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === 'list' ? 'active' : ''}`} 
+                            onClick={() => setActiveTab('list')}
+                        >
+                            Lista de Asistentes
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === 'assistant' ? 'active' : ''}`} 
+                            onClick={() => setActiveTab('assistant')}
+                        >
+                            Usar Asistente
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === 'thread' ? 'active' : ''}`} 
+                            onClick={() => setActiveTab('thread')}
+                        >
+                            Usar Thread
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button 
+                            className={`nav-link ${activeTab === 'files' ? 'active' : ''}`} 
+                            onClick={() => setActiveTab('files')}
+                        >
+                            Archivos
+                        </button>
+                    </li>
+                </ul>
+                <div className="tab-content mt-3">
+                    {renderContent()}
+                </div>
             </div>
-        </div>
+        </Fragment>
     );
 }
 

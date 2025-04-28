@@ -128,14 +128,14 @@ export default function AssistantForm(props) {
                     <input type="text" className="form-control" id="temperature" value={temperatureF}
                         onChange={e => {setTemperatureF(e.target.value);}}
                     />
-                    <small className="form-text text-muted"><pre>Coherencia 0 - 2 Creatividad | gpt-4o gpt4o-mini gpt-4-turbo gpt-4.5-preview</pre></small>
+                    <small className="form-text text-muted"><pre>Coherencia 0 - 2 Creatividad | gpt-4o gpt4o-mini gpt-4-turbo gpt-4.1 gpt-4.1-mini gpt-4.1-nano</pre></small>
                 </div>
                 <div className="col-md-4">
                     <label htmlFor="top_p" className="form-label">Top P</label>
                     <input type="text" className="form-control" id="top_p" value={toppF} 
                         onChange={e => {setToppF(e.target.value);}}
                     />
-                    <small className="form-text text-muted"><pre>0% 0 - 1 100% | gpt-4o gpt4o-mini gpt-4-turbo gpt-4.5-preview</pre></small>
+                    <small className="form-text text-muted"><pre>0% 0 - 1 100% | gpt-4o gpt4o-mini gpt-4-turbo gpt-4.1 gpt-4.1-mini gpt-4.1-nano</pre></small>
                 </div>
                 <div className="col-md-4">
                     <label htmlFor="response_format" className="form-label">Response Format</label>

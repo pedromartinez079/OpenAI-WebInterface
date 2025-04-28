@@ -40,4 +40,6 @@ export async function getStaticProps() {
 To do:
 - Allow app to write code directly in repository following sent prompts?
 - Add model gpt-4o-realtime-preview for audio output, it requires a different post method -> https://platform.openai.com/docs/guides/realtime
+- Add Responses https://platform.openai.com/docs/api-reference/responses
+  - Tools: web search, file search,vfunction calls
 */

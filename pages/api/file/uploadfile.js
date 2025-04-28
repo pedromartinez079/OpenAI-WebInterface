@@ -48,8 +48,8 @@ export default async function handler(req, res) {
       console.log(data.data);
       return res.status(200).json(data.data);   
     } catch (error) {
-        console.error({message: 'Error communicating with OpenAI from /api/uploadfile.js', error: error.response.data});
-        res.status(400).json({message: 'Error communicating with OpenAI from /api/uploadfile.js', error: error.response.data});
+        console.error({message: 'Error communicating with OpenAI from /api/file/uploadfile.js', error: error.response.data});
+        res.status(400).json({message: 'Error communicating with OpenAI from /api/file/uploadfile.js', error: error.response.data});
         return;            
     }
   });  

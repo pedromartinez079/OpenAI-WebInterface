@@ -60,19 +60,21 @@ export default function NavBar(props) {
                                 aria-label="Selección de modelo para ChatGPT"
                                 defaultValue="gpt-4.1"
                                 >
-                                <option value="gpt-4o">gpt-4o</option>
-                                <option value="gpt-4o-mini">gpt-4o-mini</option>
-                                <option value="gpt-4o-mini-search-preview">gpt-4o-mini-search-preview</option>
-                                <option value="gpt-4o-search-preview">gpt-4o-search-preview</option>
-                                <option value="gpt-4-turbo">gpt-4-turbo</option>
-                                <option value="gpt-4.1">gpt-4.1</option>
-                                <option value="gpt-4.1-mini">gpt-4.1-mini</option>
-                                <option value="gpt-4.1-nano">gpt-4.1-nano</option>
-                                <option value="o1">o1</option>                                
+                                <option value="gpt-4o">gpt-4o | input $2.50/1M</option>
+                                <option value="gpt-4o-mini">gpt-4o-mini | input $0.15/1M</option>
+                                <option value="gpt-4o-mini-search-preview">gpt-4o-mini-search-preview | input $0.15/1M</option>
+                                <option value="gpt-4o-search-preview">gpt-4o-search-preview | input $2.50/1M</option>
+                                <option value="gpt-4-turbo">gpt-4-turbo | input $10/1M</option>
+                                <option value="gpt-4.1">gpt-4.1 | input $2.0/1M</option>
+                                <option value="gpt-4.1-mini">gpt-4.1-mini | input $0.4/1M</option>
+                                <option value="gpt-4.1-nano">gpt-4.1-nano | input $0.1/1M</option>
+                                <option value="o1">o1 | input $15/1M</option>                                
                                 {/*<option value="o1-mini">o1-mini (deprecated)</option>
                                 <option value="o1-preview">o1-preview (deprecated)</option>
-                                <option value="o1-pro">o1-pro (costo alto)</option>*/}
-                                <option value="o3-mini">o3-mini</option>                                
+                                <option value="o1-pro">o1-pro | input $150/1M</option>
+                                <option value="o3">o3 | input $2/1M</option> Verify ID Organization for o3*/}
+                                <option value="o3-mini">o3-mini | input $1.10/1M</option>
+                                <option value="o4-mini">o4-mini | input $1.10/1M</option>                                
                             </select> )
                         }
                     </ul>                    

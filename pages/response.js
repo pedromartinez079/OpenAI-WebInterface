@@ -26,7 +26,7 @@ export default function Response(props) {
                 <div className="row mb-3">
                     <div className="col-md-8">
                         <label htmlFor="response" className="form-label">Respuesta</label>
-                        <textarea className="form-control" id="response" rows="4"
+                        <textarea className="form-control" id="response" rows="14"
                           value={inputmsg}
                           onChange={ e => {} }
                         />
@@ -40,42 +40,44 @@ export default function Response(props) {
                           value={inputmsg}
                           onChange={ e => {} }
                         />
-                        <div className="form-check form-switch">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="parallel_tool_calls"
-                            checked={true}
-                            onChange={e => {}}
-                          />
-                          <label className="form-check-label" htmlFor="parallel_tool_calls">
-                            parallel_tool_calls
-                          </label>                          
-                        </div>
-                        <div className="form-check form-switch">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="store"
-                            checked={true}
-                            onChange={e => {}}
-                          />
-                          <label className="form-check-label" htmlFor="store">
-                            Store
-                          </label>
-                        </div>
-                        <div className="form-check form-switch">
-                          <input
-                            className="form-check-input"
-                            type="checkbox"
-                            id="stream"
-                            checked={true}
-                            onChange={e => {}}
-                          />
-                          <label className="form-check-label" htmlFor="stream">
-                            Stream
-                          </label>
-                        </div>
+                        <div className="d-flex gap-3 my-2">
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id="parallel_tool_calls"
+                              checked={true}
+                              onChange={e => {}}
+                            />
+                            <label className="form-check-label" htmlFor="parallel_tool_calls">
+                              parallel_tool_calls
+                            </label>                          
+                          </div>                        
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id="store"
+                              checked={true}
+                              onChange={e => {}}
+                            />
+                            <label className="form-check-label" htmlFor="store">
+                              Store
+                            </label>
+                          </div>                        
+                          <div className="form-check form-switch">
+                            <input
+                              className="form-check-input"
+                              type="checkbox"
+                              id="stream"
+                              checked={true}
+                              onChange={e => {}}
+                            />
+                            <label className="form-check-label" htmlFor="stream">
+                              Stream
+                            </label>
+                          </div>
+                        </div>                        
                         <div className="row">
                           <div className="col-md-3">
                             <input 
@@ -94,7 +96,7 @@ export default function Response(props) {
                             />
                           </div>
                           <div className="col-md-7">                
-                            <select className="form-select my-1" 
+                            <select className="form-select" 
                                 onChange={e => {}} 
                                 aria-label="Reasoning Effort"
                                 defaultValue="low"
@@ -109,15 +111,20 @@ export default function Response(props) {
                     </div>
                     <div className="col-md-4">
                       <label htmlFor="model" className="form-label">Model</label>
-                      <select className="form-select" id="model" value={model} onChange={() => {}}>
-                          <option value="gpt-4o">gpt-4o</option>
-                          <option value="gpt-4o-mini">gpt-4o-mini</option>
-                          <option value="gpt-4-turbo">gpt-4-turbo</option>
-                          <option value="gpt-4.1">gpt-4.1</option>
-                          <option value="gpt-4.1-mini">gpt-4.1-mini</option>
-                          <option value="gpt-4.1-nano">gpt-4.1-nano</option>
-                          <option value="o1">o1</option>
-                          <option value="o3-mini">o3-mini</option>
+                      <select className="form-select" id="model" defaultValue="gpt-4.1" 
+                        value={model} onChange={() => {}}
+                        >
+                          <option value="gpt-4o">gpt-4o | input $2.50/1M</option>
+                          <option value="gpt-4o-mini">gpt-4o-mini | input $0.15/1M</option>
+                          <option value="gpt-4-turbo">gpt-4-turbo | input $10/1M</option>
+                          <option value="gpt-4.1">gpt-4.1 | input $2.0/1M</option>
+                          <option value="gpt-4.1-mini">gpt-4.1-mini | input $0.4/1M</option>
+                          <option value="gpt-4.1-nano">gpt-4.1-nano | input $0.1/1M</option>
+                          <option value="o1">o1 | input $15/1M</option>
+                          <option value="o1-pro">o1-pro | input $150/1M</option>
+                          {/* <option value="o3">o3 | input $10/1M (verify id)</option> */}
+                          <option value="o3-mini">o3-mini | input $1.10/1M</option>
+                          <option value="o4-mini">o4-mini | input $1.10/1M</option>
                           {/* Add more model options here if needed */}
                       </select>
                       <label htmlFor="include" className="form-label">Incluir</label>
@@ -180,7 +187,7 @@ export default function Response(props) {
                 <button type="submit" className="btn btn-primary mx-1 my-1" onClick={e => {}}>Modificar Thread</button>
                 <button type="submit" className="btn btn-primary mx-1 my-1" onClick={e => {}}>Eliminar Thread</button>
                 <pre>{responseMessage}</pre>
-              </div>
+              </div>              
               <div>
                   <label className="h6">Actividad:</label>              
                   <ul className="list-group" id="runs_list">

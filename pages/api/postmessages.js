@@ -10,7 +10,7 @@ export default async function handler(req, res) {
         let topP = req.body.topP;
         const OPENAI_API_KEY = process.env.OPENAI_API_KEY
 
-        if (model === 'o1' || model === 'o3-mini') { temperature = 1; topP = undefined; }
+        if (model === 'o1' || model === 'o3' || model === 'o3-mini' || model === 'o4-mini') { temperature = 1; topP = undefined; }
         else { reasoningEffort = undefined; }
 
         if (model === 'o1-preview' || model === 'o1-mini') { temperature = 1; topP = undefined; }

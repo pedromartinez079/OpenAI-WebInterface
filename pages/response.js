@@ -2,34 +2,143 @@ import { Fragment } from 'react';
 import Head from "next/head";
 
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from "axios";
 
 export default function Response(props) {  
   const [responseOutput, setResponseOutput] = useState(null);
-  const [input, setInput] = useState(null);
-  const [instructions, setInstructions] = useState(null);
+  const [showResponse, setShowResponse] = useState(null);
+  const [input, setInput] = useState(undefined);
+  const [instructions, setInstructions] = useState(undefined);
   const [paralleltoolcalls, setParalleltoolcalls] = useState(false);
   const [store, setStore] = useState(false);
   const [stream, setStream] = useState(false);
   const [temp, setTemp] = useState(0.75);
   const [topp, setTopp] = useState(1);
-  const [reasoningEffort, setReasoningEffort] = useState("low");  
+  const [reasoningEffort, setReasoningEffort] = useState({});  
   const [model, setModel] = useState("gpt-4.1");
   const [include, setInclude] = useState([]);
-  const [previousresponse, setPreviousresponse] = useState(null);
-  const [textStr, setTextStr] = useState(null);
-  const [fileid, setFileid] = useState(null);
-  const [toolsStr, setToolsStr] = useState([]);
-  const [toolchoiceStr, setToolchoiceStr] = useState(null);
-  const [metadataStr, setMetadataStr] = useState(null);
+  const [previousresponse, setPreviousresponse] = useState(undefined);
+  const [textStr, setTextStr] = useState(undefined);
+  const [fileid, setFileid] = useState(undefined);
+  const [toolsStr, setToolsStr] = useState(undefined);
+  const [toolchoiceStr, setToolchoiceStr] = useState(undefined);
+  const [metadataStr, setMetadataStr] = useState(undefined);
   const [responseMessage, setResponseMessage] = useState(null);
   const [responsesLog, setResponsesLog] = useState([]);
+  const omodels = ['o1','o1-pro','o3-mini','o4-mini'];
 
-  const handleSend = async (e) => {}
+  const convertToDate = (ts) => {
+    const date = new Date(Number(ts) * 1000);
+    const formattedDate = date.toLocaleString();
+    return(formattedDate);
+  };
+
+  const handleSend = async (e) => {
+    e.preventDefault();
+    let inputobj = input;
+    let reasoning = null;
+    let temperature = null;
+    let noStream = false; // Stream disabled for now
+    let prevmsgid = null;
+    let metadata = null;
+    let text = null;
+    let tools = null;
+    let toolchoice = null;
+    if (previousresponse === '') { prevmsgid = undefined }
+    else { prevmsgid = previousresponse }
+    if ((fileid !== undefined) && (fileid !== '') && (fileid !== null)) { 
+      inputobj = [{role:"user",
+                  content: [{type: "input_file", file_id: fileid}, {type: "input_text", text:input}]
+                }] 
+    }
+    try { 
+      if (!(metadataStr === undefined)) { metadata = JSON.parse(metadataStr); }
+      if (!(textStr === undefined)) { text = JSON.parse(textStr); }
+      if (!(toolsStr === undefined)) { tools = JSON.parse(toolsStr); }
+      if (['none','auto','required'].includes(toolchoiceStr)) { toolchoice = toolchoiceStr }
+      else { 
+        if (!(toolchoiceStr === undefined)) { toolchoice = JSON.parse(toolchoiceStr) }
+      }      
+    } 
+    catch (error) { console.log(error) }
+    //console.log(omodels.includes(model));
+    if (omodels.includes(model)) { reasoning = reasoningEffort }
+    else { temperature = temp }
+    let data = {
+      input: inputobj, model: model, include: include, instructions: instructions, metadata: metadata,
+      parallel_tool_calls: paralleltoolcalls, previous_response_id: prevmsgid, reasoning: reasoning,
+      store: store, stream: noStream, temperature: temperature, top_p: topp, text: text, tools: tools,
+      tool_choice: toolchoice, safety_identifier: null,
+    };
+    console.log('Create Response', data);
+    try {
+      const response = await axios.post('/api/response/createresponse', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      //console.log('Response created:', response.data);
+      setResponseOutput(response.data),
+      setResponseMessage('Respuesta creada.');
+    } catch (error) {
+      console.error('Error creating response:', error);
+      if (error !== undefined) {setResponseOutput(error.response.data.error.error.message);}
+      setResponseMessage('Respuesta no ha sido creada.');
+    }
+  }
 
   const handleDelete = async (e) => {}
 
-  //To do: Get Responses
+  //Get Responses
+  useEffect(() => {
+    const fetchResponses = async () => {
+      try {
+        const responseslist = await axios.get('/api/response/getresponses', {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        setResponsesLog(responseslist.data.responses);
+        console.log('Responses list:', responseslist.data.responses);
+      } catch (error) {
+          console.log(error);
+      }
+    };
+    fetchResponses();
+  }, []);
+
+  // Show & Store Response output
+  useEffect(() => {
+    // Insert Response in DB
+    const insertResponse = async () => {
+      if (store === true && responseMessage === 'Respuesta creada.') {
+          try {
+            const responseinsert = await axios.post('/api/db/insertresponsedb', {response: responseOutput}, {
+              headers: {
+                'Content-Type': 'application/json',
+              },        
+            });
+            console.log(responseinsert);
+          }
+          catch (error) {}
+      }
+    }
+    // Check responseOutput array: it could have more than one element depending on response creation
+    if ((responseOutput !== null) && (responseOutput !== undefined)) {
+      console.log('Response Output:', responseOutput, typeof responseOutput);
+      if (typeof responseOutput === "string") { setShowResponse(responseOutput) }
+      else if (typeof responseOutput === "object") {
+        if (omodels.includes(model)) {
+          setShowResponse(responseOutput.output[1].content[0].text);
+        }
+        else { setShowResponse(responseOutput.output[0].content[0].text) }
+      }
+      else { setShowResponse('Response type unknown') }
+      insertResponse();
+    }
+    else {setShowResponse('')}    
+  }, [responseOutput]);
 
   return(
     <Fragment>
@@ -44,9 +153,9 @@ export default function Response(props) {
           <div className="row mb-3">
             <div className="col-md-8">
               <label htmlFor="response" className="form-label">Respuesta</label>
-              <div className="chat-container border border-primary px-3 py-1 my-2" style={{ height: '27rem', overflowY: 'scroll', padding: '10px', borderRadius: '10px' }}>
-                <pre className="form-control-plaintext border rounded bg-light mb-1" id="response" style={{ minHeight: '2rem' }}>
-                  {responseOutput}
+              <div className="chat-container border border-primary px-3 py-1 my-2" style={{ height: '30rem', overflowY: 'scroll', padding: '10px', borderRadius: '10px' }}>
+                <pre className="form-control-plaintext border rounded bg-light mb-1" id="response" style={{ minHeight: '2rem', whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "auto" }}>
+                  {showResponse}
                 </pre>
               </div>                        
               <label htmlFor="input" className="form-label">Mensaje</label>
@@ -101,7 +210,7 @@ export default function Response(props) {
                 <div className="col-md-3">
                   <input 
                     type="range" className="form-range" min="0" max="2" step="0.1" id="temperatureRange" 
-                    value={temp} onChange={e => {setTemp(e.target.value)}}
+                    value={temp} onChange={e => {setTemp(parseFloat(e.target.value))}}
                     data-bs-toggle="tooltip"
                     title={"GPT models - [Temperature 0<Coherencia...Creatividad<2] "+temp}
                   />
@@ -109,16 +218,16 @@ export default function Response(props) {
                 <div className="col-md-2">
                   <input 
                     type="range" className="form-range" min="0" max="1" step="0.1" id="toppRange" 
-                    value={topp} onChange={e => {setTopp(e.target.value)}}
+                    value={topp} onChange={e => {setTopp(parseFloat(e.target.value))}}
                     data-bs-toggle="tooltip"
                     title={"GPT models - [TopP 0% 0..1 100%] "+topp}
                   />
                 </div>
                 <div className="col-md-7">                
                   <select className="form-select" 
-                    onChange={e => {setReasoningEffort(e.target.value)}} 
+                    onChange={e => {setReasoningEffort({effort: e.target.value, summary:  null})}} 
                     aria-label="Reasoning Effort"
-                    defaultValue={reasoningEffort}
+                    value={reasoningEffort}
                     title={"o1 & o3-mini models - Reasoning effort "}
                     >
                     <option value="low">low</option>
@@ -130,7 +239,7 @@ export default function Response(props) {
             </div>
             <div className="col-md-4">
               <label htmlFor="model" className="form-label">Model</label>
-              <select className="form-select mb-1" id="model" defaultValue="gpt-4.1" 
+              <select className="form-select mb-1" id="model" 
                 value={model} onChange={(e) => {setModel(e.target.value)}}
                 >
                   <option value="gpt-4o">gpt-4o | input $2.50/1M</option>
@@ -186,7 +295,7 @@ export default function Response(props) {
                 onChange={ e => {setTextStr(e.target.value)} }
               />
               <small className="form-text text-muted">
-                <pre>{`{format: {"type":"json_schema"}} | {format: {"type":"text"}}`}</pre>
+                <pre>{`{"format": {"type":"text"}} | {"format": {"type":"json_schema", "name":"myFormat", "schema":{"type":"object", "properties":{"output":{"type":"object"}}}}}`}</pre>
               </small>
               <label htmlFor="attachment" className="form-label">Attachment</label>
               <textarea className="form-control" id="attachment" rows="1" 
@@ -194,7 +303,7 @@ export default function Response(props) {
                 onChange={ e => {setFileid(e.target.value)} }
               />
               <small className="form-text text-muted">
-                <pre>Identificador de archivo</pre>
+                <pre>Identificador de archivo, sólo formato PDF</pre>
               </small>
               <label htmlFor="tools" className="form-label">Herramientas</label>
               <textarea className="form-control" id="tools" rows="1" 
@@ -202,7 +311,7 @@ export default function Response(props) {
                 onChange={ e => {setToolsStr(e.target.value)} }>
               </textarea>
               <small className="form-text text-muted">
-                <pre>File Search, Function, Web Search, Computer Use, MCP, Code interpreter, Image generation, Local shell</pre>
+                <pre>{`[{"type":"code_interpreter", "container":{ CodeInterpreterContainerAuto:{"type":"auto", "file_ids": []}}}},\n{"type":"function", "function":{"name":"FunctionName", "parameters":{"type":"object","properties":{"query":{"type":"string", "description":"question"}}}}},\n{"type":"web_search_preview_2025_03_11"}]`}</pre>
               </small>
               <label htmlFor="tool_choice" className="form-label">Cómo usar las herramientas</label>
               <textarea className="form-control" id="tool_choice" rows="1" 
@@ -221,17 +330,17 @@ export default function Response(props) {
           </div>                        
         </form>
         <div>
-          <button type="submit" className="btn btn-primary mx-1 my-1" onClick={e => {handleSend}}>Enviar</button>
-          <button type="submit" className="btn btn-primary mx-1 my-1" onClick={e => {handleDelete}}>Eliminar Respuesta</button>
+          <button type="submit" className="btn btn-primary mx-1 my-1" onClick={handleSend}>Enviar</button>
+          <button type="submit" className="btn btn-primary mx-1 my-1" onClick={handleDelete}>Eliminar Respuesta</button>
           <pre>{responseMessage}</pre>
         </div>              
         <div>
           <label className="h6">Actividad:</label>              
-          <ul className="list-group" id="runs_list">
-            <li className="list-group-item"><pre>Id | Estado | Enviado | Inicio | Fin</pre></li>
+          <ul className="list-group" id="responses_list">
+            <li className="list-group-item"><pre>Id | Fecha | Metadata</pre></li>
             {responsesLog.map((resp, index) => (
-              <li key={index} className="list-group-item" onClick={() => console.log('Click on Run')}>
-                <pre>{resp.id} | {resp.status} | {convertToDate(resp.created_at)} | {convertToDate(resp.started_at)} | {convertToDate(resp.completed_at)}</pre>
+              <li key={index} className="list-group-item" onClick={() => console.log('Click on Response')}>
+                <pre>{resp.id} | {convertToDate(resp.created_at)} | {JSON.stringify(resp.metadata)}</pre>
               </li>
             ))}
           </ul>

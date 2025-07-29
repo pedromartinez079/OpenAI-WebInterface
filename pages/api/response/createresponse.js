@@ -17,7 +17,7 @@ export default async function handler(req, res) {
         const text = req.body.text; // {format: {type:"json_schema"}}; options for text response
         const tools = req.body.tools; // Array
         const tool_choice = req.body.tool_choice; // string or object
-        const user = req.body.user; // string optional
+        const safety_identifier = req.body.safety_identifier; // string optional
         const OPENAI_API_KEY = process.env.OPENAI_API_KEY
 
         try {
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
               text: text,
               tools: tools,
               tool_choice: tool_choice,
-              user: user,
+              safety_identifier: safety_identifier,
             }, {
               headers: {
                 'Authorization': `Bearer ${OPENAI_API_KEY}`,

@@ -45,8 +45,10 @@ export default function Response(props) {
     let text = null;
     let tools = null;
     let toolchoice = null;
+    let includearray = null;
     if (previousresponse === '') { prevmsgid = undefined }
     else { prevmsgid = previousresponse }
+    // To do: Image input, file input, file search
     if ((fileid !== undefined) && (fileid !== '') && (fileid !== null)) { 
       inputobj = [{role:"user",
                   content: [{type: "input_file", file_id: fileid}, {type: "input_text", text:input}]
@@ -63,10 +65,20 @@ export default function Response(props) {
     } 
     catch (error) { console.log(error) }
     //console.log(omodels.includes(model));
-    if (omodels.includes(model)) { reasoning = reasoningEffort }
-    else { temperature = temp }
+    if (omodels.includes(model)) { 
+      reasoning = reasoningEffort;
+      if (include !== null && include.includes("message.output_text.logprobs")) {
+        includearray = include.filter(item => item !== "message.output_text.logprobs");
+      }
+    }
+    else { 
+      temperature = temp;
+      if (include !== null && include.includes("reasoning.encrypted_content")) {
+        includearray = include.filter(item => item !== "reasoning.encrypted_content");
+      }
+    }
     let data = {
-      input: inputobj, model: model, include: include, instructions: instructions, metadata: metadata,
+      input: inputobj, model: model, include: includearray, instructions: instructions, metadata: metadata,
       parallel_tool_calls: paralleltoolcalls, previous_response_id: prevmsgid, reasoning: reasoning,
       store: store, stream: noStream, temperature: temperature, top_p: topp, text: text, tools: tools,
       tool_choice: toolchoice, safety_identifier: null,

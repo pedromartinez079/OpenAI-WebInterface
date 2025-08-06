@@ -6,6 +6,15 @@ import 'highlight.js/styles/github.css';
 import MarkdownIt from 'markdown-it';
 
 const MessagesDiv = ({ messages }) => {
+	const copyToClipboard = (text) => {
+    	const textarea = document.createElement('textarea');
+    	textarea.value = text;
+    	document.body.appendChild(textarea);
+    	textarea.select();
+    	document.execCommand('copy');
+    	document.body.removeChild(textarea);
+	};
+
 	const handleClick = (text) => {			
 		const md = new MarkdownIt({ highlight: function (str, lang) { 
 			if (lang && hljs.getLanguage(lang)) { 
@@ -106,12 +115,24 @@ const MessagesDiv = ({ messages }) => {
 						justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start',
 					}} > 
 					<div 
-						className="chat-content" 
+						className="chat-content" role="region" aria-live="polite"
 						style={{ 
 							backgroundColor: msg.role === 'user' ? '#a5fafc' : '#edf3f3', 
 							padding: '8px', borderRadius: '10px', maxWidth: '85%' 
 						}}> 
-						<strong style={{ color: '#555' }}>{msg.role === 'user' ? '' : ''}</strong>{msg.content}											
+						<strong style={{ color: '#555' }}>{msg.role === 'user' ? '' : ''}</strong>
+						<pre className="form-control-plaintext " id="msg-content" style={{ minHeight: '2rem', whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "auto", fontSize: '1rem', lineHeight: '1.5'}}>
+							{msg.content}
+						</pre>
+						{msg.role === 'user' ? null :
+						<button 
+							className="btn btn-outline-secondary btn-sm"
+							aria-label="Copiar al portapapeles"
+							onClick={() => copyToClipboard(msg.content)}
+						>
+							<i className="bi bi-clipboard"></i>
+						</button>
+						}
 					</div> 						
 					{!(msg.url === undefined) && (
 						<div className='chat-url my-2' style={{ position: 'relative', width: '160px', height: '120px' }}>

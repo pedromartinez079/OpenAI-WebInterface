@@ -165,8 +165,8 @@ export default function Response(props) {
           <div className="row mb-3">
             <div className="col-md-8">
               <label htmlFor="response" className="form-label">Respuesta</label>
-              <div className="chat-container border border-primary px-3 py-1 my-2" style={{ height: '30rem', overflowY: 'scroll', padding: '10px', borderRadius: '10px' }}>
-                <pre className="form-control-plaintext border rounded bg-light mb-1" id="response" style={{ minHeight: '2rem', whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "auto" }}>
+              <div className="chat-container border border-primary px-3 py-1 my-2" role="region" aria-live="polite" style={{ height: '30rem', overflowY: 'scroll', padding: '10px', borderRadius: '10px' }}>
+                <pre className="form-control-plaintext border rounded bg-light mb-1" id="response" style={{ minHeight: '2rem', whiteSpace: "pre-wrap", wordBreak: "break-word", overflowX: "auto", fontSize: '1rem', lineHeight: '1.5'}}>
                   {showResponse}
                 </pre>
               </div>                        

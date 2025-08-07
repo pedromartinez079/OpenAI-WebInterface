@@ -14,13 +14,12 @@ export default function Home() {
          <link rel="icon" href="#" sizes="any" />
       </Head>
       <div className='container'>
-        <div className='m-auto my-1' style={{ width: '950px', height: '543px' }}>
+        <div className='m-auto my-1' style={{ width: '950px', height: '543px', position: 'relative' }}>
 								<Image
-									src={ '/image-chatgpt.png' } // Ruta de la imagen
-									alt="Dall-E Image" // Descripción para accesibilidad
-									layout="responsive"
-									width={0} // Ancho deseado
-									height={0} // Alto deseado
+									src={ '/openai-web-interface.png' } // Ruta de la imagen
+									alt="Background" // Descripción para accesibilidad
+									layout="fill"
+                  objectFit='fill'
 								/>							
 			  </div>
       </div>

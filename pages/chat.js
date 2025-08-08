@@ -42,7 +42,7 @@ export default function GPTChat(props) {
       // console.log(selectedValue, reasoning);
       const gptMessage = data.choices[0].message;
       setMessages((prevMessages) => [...prevMessages, gptMessage]);
-      //console.log(gptMessage);
+      // console.log(gptMessage);
     } catch (error) {
       console.error('Error communicating with /api/postmessages', error);
       const gptMessage = { role: 'assistant', content: 'Error communicating with /api/postmessages. ' + error.message };

@@ -64,16 +64,28 @@ export default function Assistant(props) {
     //console.log('Modify assistant:', nameF, modelF, instructionsF, toolsF, toolresourcesF, metadataF);
     
     try {
-      let models = ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-4.1', 'gpt-4.1-mini', 'gpt-4.1-nano', 'o1', 'o3-mini'];
+      let models = ['gpt-4o', 'gpt-4o-mini', 'gpt-4-turbo', 'gpt-4.1', 'gpt-4.1-mini', 'gpt-4.1-nano', 'gpt-5', 'gpt-5-mini', 'gpt-5-nano', 'o1', 'o3-mini'];
+      let filtertemptopp = ['gpt-5', 'gpt-5-mini', 'gpt-5-nano', 'o1', 'o3-mini'];
       if (!models.includes(modelF)) {
         throw new Error('Modelo incorrecto.');
       }
       let toolsarray = typeof toolsF !== 'object' ? JSON.parse(toolsF) : toolsF;
       let toolresourcesobj = typeof toolresourcesF !== 'object' ? JSON.parse(toolresourcesF) : toolresourcesF;
       let metadataobj = typeof metadataF !== 'object' ? JSON.parse(metadataF) : metadataF;
-      let reasoningeffortstr = modelF === 'o3-mini' || modelF === 'o1' ? reasoningeffortF : null;
-      let temperaturefloat = modelF === 'o3-mini' || modelF === 'o1' ? null : parseFloat(temperatureF);
-      let toppfloat = modelF === 'o3-mini' || modelF === 'o1' ? null : parseFloat(toppF);
+      //let reasoningeffortstr = modelF === 'o3-mini' || modelF === 'o1' ? reasoningeffortF : null;
+      //let temperaturefloat = modelF === 'o3-mini' || modelF === 'o1' ? null : parseFloat(temperatureF);
+      //let toppfloat = modelF === 'o3-mini' || modelF === 'o1' ? null : parseFloat(toppF);
+      let reasoningeffortstr = null;
+      let temperaturefloat = null;
+      let toppfloat = null;
+
+      if (filtertemptopp.includes(modelF)) {
+        temperaturefloat = null;
+        toppfloat = null;
+      } else {
+        temperaturefloat = parse(temperatureF);
+        toppfloat = parse(toppF);
+      }
       
       if (modelF === 'o3-mini' || modelF === 'o1') {
         if (reasoningeffortF === null) {reasoningeffortstr='medium';} else {reasoningeffortstr=reasoningeffortF;}

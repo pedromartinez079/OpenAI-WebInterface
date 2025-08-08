@@ -15,7 +15,7 @@ export default function Response(props) {
   const [stream, setStream] = useState(false);
   const [temp, setTemp] = useState(0.75);
   const [topp, setTopp] = useState(1);
-  const [reasoningEffort, setReasoningEffort] = useState({});  
+  const [reasoningEffort, setReasoningEffort] = useState({effort: undefined, summary:  null});  
   const [model, setModel] = useState("gpt-4.1");
   const [include, setInclude] = useState([]);
   const [previousresponse, setPreviousresponse] = useState(undefined);
@@ -27,6 +27,7 @@ export default function Response(props) {
   const [responseMessage, setResponseMessage] = useState(null);
   const [responsesLog, setResponsesLog] = useState([]);
   const omodels = ['o1','o1-pro','o3-mini','o4-mini'];
+  const filtertemptopp = ['gpt-5', 'gpt-5-mini', 'gpt-5-nano'];
 
   const convertToDate = (ts) => {
     const date = new Date(Number(ts) * 1000);
@@ -39,6 +40,7 @@ export default function Response(props) {
     let inputobj = input;
     let reasoning = null;
     let temperature = null;
+    let top_p = null;
     let noStream = false; // Stream disabled for now
     let prevmsgid = null;
     let metadata = null;
@@ -46,6 +48,7 @@ export default function Response(props) {
     let tools = null;
     let toolchoice = null;
     let includearray = null;
+    
     if (previousresponse === '') { prevmsgid = undefined }
     else { prevmsgid = previousresponse }
     // To do: Image input, file input, file search
@@ -71,8 +74,11 @@ export default function Response(props) {
         includearray = include.filter(item => item !== "message.output_text.logprobs");
       }
     }
-    else { 
-      temperature = temp;
+    else {
+      if (!filtertemptopp.includes(model)) {
+        temperature = temp;
+        top_p = topp;
+      } else { reasoning = reasoningEffort }
       if (include !== null && include.includes("reasoning.encrypted_content")) {
         includearray = include.filter(item => item !== "reasoning.encrypted_content");
       }
@@ -80,7 +86,7 @@ export default function Response(props) {
     let data = {
       input: inputobj, model: model, include: includearray, instructions: instructions, metadata: metadata,
       parallel_tool_calls: paralleltoolcalls, previous_response_id: prevmsgid, reasoning: reasoning,
-      store: store, stream: noStream, temperature: temperature, top_p: topp, text: text, tools: tools,
+      store: store, stream: noStream, temperature: temperature, top_p: top_p, text: text, tools: tools,
       tool_choice: toolchoice, safety_identifier: null,
     };
     console.log('Create Response', data);
@@ -141,7 +147,7 @@ export default function Response(props) {
       console.log('Response Output:', responseOutput, typeof responseOutput);
       if (typeof responseOutput === "string") { setShowResponse(responseOutput) }
       else if (typeof responseOutput === "object") {
-        if (omodels.includes(model)) {
+        if (omodels.includes(model) || filtertemptopp.includes(model)) {
           setShowResponse(responseOutput.output[1].content[0].text);
         }
         else { setShowResponse(responseOutput.output[0].content[0].text) }
@@ -239,8 +245,8 @@ export default function Response(props) {
                   <select className="form-select" 
                     onChange={e => {setReasoningEffort({effort: e.target.value, summary:  null})}} 
                     aria-label="Reasoning Effort"
-                    value={reasoningEffort}
-                    title={"o1 & o3-mini models - Reasoning effort "}
+                    value={reasoningEffort.effort}
+                    title={"gpt5, o1 & o3-mini models - Reasoning effort "}
                     >
                     <option value="low">low</option>
                     <option value="medium">medium</option>
@@ -260,6 +266,9 @@ export default function Response(props) {
                   <option value="gpt-4.1">gpt-4.1 | input $2.0/1M</option>
                   <option value="gpt-4.1-mini">gpt-4.1-mini | input $0.4/1M</option>
                   <option value="gpt-4.1-nano">gpt-4.1-nano | input $0.1/1M</option>
+                  <option value="gpt-5">gpt-5 | input $1.25/1M</option>
+                  <option value="gpt-5-mini">gpt-5-mini | input $0.25/1M</option>
+                  <option value="gpt-5-nano">gpt-5-nano | input $0.05/1M</option>
                   <option value="o1">o1 | input $15/1M</option>
                   <option value="o1-pro">o1-pro | input $150/1M</option>
                   {/* <option value="o3">o3 | input $10/1M (verify id)</option> */}

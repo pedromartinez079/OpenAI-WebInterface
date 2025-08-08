@@ -20,7 +20,13 @@ export default async function handler(req, res) {
           topP = undefined;
         }
 
-        // console.log(model, temperature, topP);
+        if (model === 'gpt-5' || model === 'gpt-5-mini' || model === 'gpt-5-nano') {
+          temperature = 1;
+          topP = undefined;
+          reasoningEffort = req.body.reasoningEffort;
+        }
+
+        //console.log(model, temperature, topP, reasoningEffort);
         
         try {
             const response = await axios.post('https://api.openai.com/v1/chat/completions', {  

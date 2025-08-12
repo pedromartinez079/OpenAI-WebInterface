@@ -83,8 +83,8 @@ export default function Assistant(props) {
         temperaturefloat = null;
         toppfloat = null;
       } else {
-        temperaturefloat = parse(temperatureF);
-        toppfloat = parse(toppF);
+        temperaturefloat = parseFloat(temperatureF);
+        toppfloat = parseFloat(toppF);
       }
       
       if (modelF === 'o3-mini' || modelF === 'o1') {

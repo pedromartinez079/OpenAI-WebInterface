@@ -58,7 +58,7 @@ export default function NavBar(props) {
                             <select className="form-select mx-2 bg-primary text-white" 
                                 onChange={handleSelectChange} 
                                 aria-label="Selección de modelo para ChatGPT"
-                                defaultValue="gpt-4.1"
+                                defaultValue="gpt-5.2"
                                 >
                                 <option value="gpt-4o">gpt-4o | input $2.50/1M</option>
                                 <option value="gpt-4o-mini">gpt-4o-mini | input $0.15/1M</option>

@@ -16,7 +16,7 @@ export default function Response(props) {
   const [temp, setTemp] = useState(0.75);
   const [topp, setTopp] = useState(1);
   const [reasoningEffort, setReasoningEffort] = useState({effort: undefined, summary:  null});  
-  const [model, setModel] = useState("gpt-4.1");
+  const [model, setModel] = useState("gpt-5.2");
   const [include, setInclude] = useState([]);
   const [previousresponse, setPreviousresponse] = useState(undefined);
   const [textStr, setTextStr] = useState(undefined);

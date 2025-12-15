@@ -71,6 +71,8 @@ export default function NavBar(props) {
                                 <option value="gpt-5">gpt-5 | input $1.25/1M</option>
                                 <option value="gpt-5-mini">gpt-5-mini | input $0.25/1M</option>
                                 <option value="gpt-5-nano">gpt-5-nano | input $0.05/1M</option>
+                                <option value="gpt-5.1">gpt-5.1 | input $1.5/1M</option>
+                                <option value="gpt-5.2">gpt-5.2 | input $1.75/1M</option>
                                 <option value="o1">o1 | input $15/1M</option>                                
                                 {/*<option value="o1-mini">o1-mini (deprecated)</option>
                                 <option value="o1-preview">o1-preview (deprecated)</option>

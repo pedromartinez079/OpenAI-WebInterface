@@ -28,6 +28,7 @@ export default function Response(props) {
   const [responsesLog, setResponsesLog] = useState([]);
   const omodels = ['o1','o1-pro','o3-mini','o4-mini'];
   const filtertemptopp = ['gpt-5', 'gpt-5-mini', 'gpt-5-nano'];
+  const filterothers = ['gpt-5.2-pro'];
 
   const convertToDate = (ts) => {
     const date = new Date(Number(ts) * 1000);
@@ -75,7 +76,7 @@ export default function Response(props) {
       }
     }
     else {
-      if (!filtertemptopp.includes(model)) {
+      if (!(filtertemptopp.includes(model) || filterothers.includes(model))) {
         temperature = temp;
         top_p = topp;
       } else { reasoning = reasoningEffort }
@@ -269,6 +270,9 @@ export default function Response(props) {
                   <option value="gpt-5">gpt-5 | input $1.25/1M</option>
                   <option value="gpt-5-mini">gpt-5-mini | input $0.25/1M</option>
                   <option value="gpt-5-nano">gpt-5-nano | input $0.05/1M</option>
+                  <option value="gpt-5.1">gpt-5.1 | input $1.5/1M</option>
+                  <option value="gpt-5.2">gpt-5.2 | input $1.75/1M</option>
+                  <option value="gpt-5.2-pro">gpt-5.2-pro | input $21/1M</option>
                   <option value="o1">o1 | input $15/1M</option>
                   <option value="o1-pro">o1-pro | input $150/1M</option>
                   {/* <option value="o3">o3 | input $10/1M (verify id)</option> */}

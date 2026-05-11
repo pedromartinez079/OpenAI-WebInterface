@@ -76,7 +76,7 @@ export default function Response(props) {
       }
     }
     else {
-      if (!(filtertemptopp.includes(model) || filterothers.includes(model))) {
+      if (!(filtertemptopp.includes(model) || filterothers.includes(model) || model === 'gpt-5.5')) {
         temperature = temp;
         top_p = topp;
       } else { reasoning = reasoningEffort }
@@ -261,23 +261,15 @@ export default function Response(props) {
               <select className="form-select mb-1" id="model" 
                 value={model} onChange={(e) => {setModel(e.target.value)}}
                 >
-                  <option value="gpt-4o">gpt-4o | input $2.50/1M</option>
-                  <option value="gpt-4o-mini">gpt-4o-mini | input $0.15/1M</option>
-                  <option value="gpt-4-turbo">gpt-4-turbo | input $10/1M</option>
                   <option value="gpt-4.1">gpt-4.1 | input $2.0/1M</option>
-                  <option value="gpt-4.1-mini">gpt-4.1-mini | input $0.4/1M</option>
-                  <option value="gpt-4.1-nano">gpt-4.1-nano | input $0.1/1M</option>
-                  <option value="gpt-5">gpt-5 | input $1.25/1M</option>
                   <option value="gpt-5-mini">gpt-5-mini | input $0.25/1M</option>
                   <option value="gpt-5-nano">gpt-5-nano | input $0.05/1M</option>
-                  <option value="gpt-5.1">gpt-5.1 | input $1.5/1M</option>
-                  <option value="gpt-5.2">gpt-5.2 | input $1.75/1M</option>
-                  <option value="gpt-5.2-pro">gpt-5.2-pro | input $21/1M</option>
-                  <option value="o1">o1 | input $15/1M</option>
-                  <option value="o1-pro">o1-pro | input $150/1M</option>
-                  {/* <option value="o3">o3 | input $10/1M (verify id)</option> */}
-                  <option value="o3-mini">o3-mini | input $1.10/1M</option>
-                  <option value="o4-mini">o4-mini | input $1.10/1M</option>
+                  <option value="gpt-5">gpt-5 | input $1.25/1M</option>
+                  <option value="gpt-5.4-mini">gpt-5.4-mini | input $0.75/1M</option>
+                  <option value="gpt-5.4-nano">gpt-5.4-nano | input $0.2/1M</option>
+                  <option value="gpt-5.4">gpt-5.4 | input $2.5/1M</option>
+                  <option value="gpt-5.5">gpt-5.5 | input $5/1M</option>
+                  {/* <option value="gpt-5.5-pro">gpt-5.5-pro | input $30/1M</option> */}
                   {/* Add more model options here if needed */}
               </select>
               <label htmlFor="include" className="form-label">Incluir</label>                                          

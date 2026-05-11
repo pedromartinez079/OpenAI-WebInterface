@@ -58,28 +58,17 @@ export default function NavBar(props) {
                             <select className="form-select mx-2 bg-primary text-white" 
                                 onChange={handleSelectChange} 
                                 aria-label="Selección de modelo para ChatGPT"
-                                defaultValue="gpt-5.2"
+                                defaultValue="gpt-5.4-nano"
                                 >
-                                <option value="gpt-4o">gpt-4o | input $2.50/1M</option>
-                                <option value="gpt-4o-mini">gpt-4o-mini | input $0.15/1M</option>
-                                <option value="gpt-4o-mini-search-preview">gpt-4o-mini-search-preview | input $0.15/1M</option>
-                                <option value="gpt-4o-search-preview">gpt-4o-search-preview | input $2.50/1M</option>
-                                <option value="gpt-4-turbo">gpt-4-turbo | input $10/1M</option>
                                 <option value="gpt-4.1">gpt-4.1 | input $2.0/1M</option>
-                                <option value="gpt-4.1-mini">gpt-4.1-mini | input $0.4/1M</option>
-                                <option value="gpt-4.1-nano">gpt-4.1-nano | input $0.1/1M</option>
-                                <option value="gpt-5">gpt-5 | input $1.25/1M</option>
                                 <option value="gpt-5-mini">gpt-5-mini | input $0.25/1M</option>
                                 <option value="gpt-5-nano">gpt-5-nano | input $0.05/1M</option>
-                                <option value="gpt-5.1">gpt-5.1 | input $1.5/1M</option>
-                                <option value="gpt-5.2">gpt-5.2 | input $1.75/1M</option>
-                                <option value="o1">o1 | input $15/1M</option>                                
-                                {/*<option value="o1-mini">o1-mini (deprecated)</option>
-                                <option value="o1-preview">o1-preview (deprecated)</option>
-                                <option value="o1-pro">o1-pro | input $150/1M</option>
-                                <option value="o3">o3 | input $2/1M</option> Verify ID Organization for o3*/}
-                                <option value="o3-mini">o3-mini | input $1.10/1M</option>
-                                <option value="o4-mini">o4-mini | input $1.10/1M</option>                                
+                                <option value="gpt-5">gpt-5 | input $1.25/1M</option>
+                                <option value="gpt-5.4-mini">gpt-5.4-mini | input $0.75/1M</option>
+                                <option value="gpt-5.4-nano">gpt-5.4-nano | input $0.2/1M</option>
+                                <option value="gpt-5.4">gpt-5.4 | input $2.5/1M</option>
+                                <option value="gpt-5.5">gpt-5.5 | input $5/1M</option>
+                                {/* Add more model options here if needed */}                                
                             </select> )
                         }
                     </ul>                    

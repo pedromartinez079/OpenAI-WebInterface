@@ -58,7 +58,7 @@ export default function NavBar(props) {
                             <select className="form-select mx-2 bg-primary text-white" 
                                 onChange={handleSelectChange} 
                                 aria-label="Selección de modelo para ChatGPT"
-                                defaultValue="gpt-5.4-nano"
+                                defaultValue="gpt-5.6-luna"
                                 >
                                 <option value="gpt-4.1">gpt-4.1 | input $2.0/1M</option>
                                 <option value="gpt-5-mini">gpt-5-mini | input $0.25/1M</option>
@@ -68,6 +68,9 @@ export default function NavBar(props) {
                                 <option value="gpt-5.4-nano">gpt-5.4-nano | input $0.2/1M</option>
                                 <option value="gpt-5.4">gpt-5.4 | input $2.5/1M</option>
                                 <option value="gpt-5.5">gpt-5.5 | input $5/1M</option>
+                                <option value="gpt-5.6-luna">gpt-5.6-luna | input $0.2/1M</option>
+                                <option value="gpt-5.6-terra">gpt-5.6-terra | input $2/1M</option>
+                                <option value="gpt-5.6-sol">gpt-5.6-sol | input $5/1M</option>
                                 {/* Add more model options here if needed */}                                
                             </select> )
                         }

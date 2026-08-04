@@ -28,7 +28,7 @@ export default function Response(props) {
   const [responsesLog, setResponsesLog] = useState([]);
   const omodels = ['o1','o1-pro','o3-mini','o4-mini'];
   const filtertemptopp = ['gpt-5', 'gpt-5-mini', 'gpt-5-nano'];
-  const filterothers = ['gpt-5.2-pro'];
+  const filterothers = ['gpt-5.2-pro', 'gpt-5.5', 'gpt-5.6-luna', 'gpt-5.6-terra', 'gpt-5.6-sol'];
 
   const convertToDate = (ts) => {
     const date = new Date(Number(ts) * 1000);
@@ -76,7 +76,7 @@ export default function Response(props) {
       }
     }
     else {
-      if (!(filtertemptopp.includes(model) || filterothers.includes(model) || model === 'gpt-5.5')) {
+      if (!(filtertemptopp.includes(model) || filterothers.includes(model))) {
         temperature = temp;
         top_p = topp;
       } else { reasoning = reasoningEffort }
@@ -269,6 +269,9 @@ export default function Response(props) {
                   <option value="gpt-5.4-nano">gpt-5.4-nano | input $0.2/1M</option>
                   <option value="gpt-5.4">gpt-5.4 | input $2.5/1M</option>
                   <option value="gpt-5.5">gpt-5.5 | input $5/1M</option>
+                  <option value="gpt-5.6-luna">gpt-5.6-luna | input $0.2/1M</option>
+                  <option value="gpt-5.6-terra">gpt-5.6-terra | input $2/1M</option>
+                  <option value="gpt-5.6-sol">gpt-5.6-sol | input $5/1M</option>
                   {/* <option value="gpt-5.5-pro">gpt-5.5-pro | input $30/1M</option> */}
                   {/* Add more model options here if needed */}
               </select>

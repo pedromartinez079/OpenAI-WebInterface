@@ -20,7 +20,9 @@ export default async function handler(req, res) {
           topP = undefined;
         }
 
-        if (model === 'gpt-5' || model === 'gpt-5-mini' || model === 'gpt-5-nano' || model === 'gpt-5.5') {
+        if (model === 'gpt-5' || model === 'gpt-5-mini' || model === 'gpt-5-nano' || 
+          model === 'gpt-5.5' || model === 'gpt-5.6-luna' || model === 'gpt-5.6-terra' || 
+          model === 'gpt-5.6-sol') {
           temperature = 1;
           topP = undefined;
           reasoningEffort = req.body.reasoningEffort;

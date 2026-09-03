@@ -7,7 +7,7 @@ export default function NavBar(props) {
     const handleSelectChange = (event) => {
         const value = event.target.value;
         props.setSelectedValue(value);
-        if (value=="Seleccionar modelo") {props.setSelectedValue("gpt-4o");}
+        if (value=="Seleccionar modelo") {props.setSelectedValue("gpt-5.6-luna");}
       };
 
     useEffect(() => {
@@ -37,8 +37,8 @@ export default function NavBar(props) {
                                 <li><hr className="dropdown-divider" /></li>
                                 <li><a className="dropdown-item" href={'/dalle'}>Dall-E</a></li>
                                 <li><hr className="dropdown-divider" /></li>
-                                <li><a className="dropdown-item" href={'/assistants'}>Asistentes</a></li>
-                                <li><hr className="dropdown-divider" /></li>
+                                {/*<li><a className="dropdown-item" href={'/assistants'}>Asistentes</a></li>
+                                <li><hr className="dropdown-divider" /></li>*/}
                                 <li><a className="dropdown-item" href={'/response'}>Respuestas IA</a></li>
                                 <li><hr className="dropdown-divider" /></li>
                             </ul>
@@ -70,7 +70,7 @@ export default function NavBar(props) {
                                 <option value="gpt-5.5">gpt-5.5 | input $5/1M</option>
                                 <option value="gpt-5.6-luna">gpt-5.6-luna | input $0.2/1M</option>
                                 <option value="gpt-5.6-terra">gpt-5.6-terra | input $2/1M</option>
-                                <option value="gpt-5.6-sol">gpt-5.6-sol | input $5/1M</option>
+                                <option value="gpt-5.6-sol">gpt-5.6-sol | input $4/1M</option>
                                 {/* Add more model options here if needed */}                                
                             </select> )
                         }

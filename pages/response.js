@@ -1,3 +1,14 @@
+{/* https://developers.openai.com/api/reference/resources/responses/methods/create
+To Do:
+- instruction: system or developer message inserted in model's context
+- input(Mensaje): string or array of objects (text, image, file, conversation state, function calling)
+- context_management ?
+- conversation (include response as a part of a pre-defined conversation)
+- stream uses stream_options
+- tools: built-in, functions, MCP tools
+
+*/}
+
 import { Fragment } from 'react';
 import Head from "next/head";
 
@@ -16,7 +27,7 @@ export default function Response(props) {
   const [temp, setTemp] = useState(0.75);
   const [topp, setTopp] = useState(1);
   const [reasoningEffort, setReasoningEffort] = useState({effort: undefined, summary:  null});  
-  const [model, setModel] = useState("gpt-5.2");
+  const [model, setModel] = useState("gpt-5.6-luna");
   const [include, setInclude] = useState([]);
   const [previousresponse, setPreviousresponse] = useState(undefined);
   const [textStr, setTextStr] = useState(undefined);
@@ -26,6 +37,7 @@ export default function Response(props) {
   const [metadataStr, setMetadataStr] = useState(undefined);
   const [responseMessage, setResponseMessage] = useState(null);
   const [responsesLog, setResponsesLog] = useState([]);
+  const [updateResponsesLog, setUpdateResponsesLog] = useState(false);
   const omodels = ['o1','o1-pro','o3-mini','o4-mini'];
   const filtertemptopp = ['gpt-5', 'gpt-5-mini', 'gpt-5-nano'];
   const filterothers = ['gpt-5.2-pro', 'gpt-5.5', 'gpt-5.6-luna', 'gpt-5.6-terra', 'gpt-5.6-sol'];
@@ -42,7 +54,7 @@ export default function Response(props) {
     let reasoning = null;
     let temperature = null;
     let top_p = null;
-    let noStream = false; // Stream disabled for now
+    let noStream = false; // Stream disabled
     let prevmsgid = null;
     let metadata = null;
     let text = null;
@@ -80,9 +92,10 @@ export default function Response(props) {
         temperature = temp;
         top_p = topp;
       } else { reasoning = reasoningEffort }
-      if (include !== null && include.includes("reasoning.encrypted_content")) {
+      {/*if (include !== null && include.includes("reasoning.encrypted_content")) {
         includearray = include.filter(item => item !== "reasoning.encrypted_content");
-      }
+      }*/}
+      if (include !== null) { includearray = include }
     }
     let data = {
       input: inputobj, model: model, include: includearray, instructions: instructions, metadata: metadata,
@@ -107,7 +120,58 @@ export default function Response(props) {
     }
   }
 
-  const handleDelete = async (e) => {}
+  const handleResponseClick = async (responseId) => {
+    // console.log('Selected Response ' + responseId);
+    // Get Response using ResponseID from OpenAI
+    let data = { responseid : responseId }
+    try {
+      const response = await axios.post('/api/response/getresponse', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Response loaded:', response.data);
+      // Load form with Response data
+      setResponseOutput(response.data),
+      setResponseMessage('Respuesta cargada: ' + responseId);
+    } catch (error) {
+      console.error('Error loading response:', error);
+      if (error !== undefined) {setResponseOutput(error.response.data.error.error.message);}
+      setResponseMessage('Respuesta no ha sido cargada.');
+    }    
+  }
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+    console.log('Delete Response');  
+    if ((responseOutput !== null) && (responseOutput !== undefined)) {
+      let data = { responseid : responseOutput.id }
+      // Delete loaded Response in OpenAI      
+      try {
+        console.log('Delete in OpenAI', responseOutput.id);
+        const response = await axios.post('/api/response/deleteresponse', data, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log('Response deleted in OpenAI: ', response.data);
+        // Delete loaded ResponseID in mongodb
+        console.log('Delete in DB', responseOutput.id);
+        const responsedelete = await axios.post('/api/db/deleteresponsedb', {filter: { id: responseOutput.id }}, {
+          headers: {
+            'Content-Type': 'application/json',
+          },        
+        });
+        console.log('Response deleted in DB: ', responsedelete);
+        setResponseOutput(undefined),
+        setResponseMessage('Respuesta eliminada: ' + responseOutput.id);
+      } catch (error) {
+        console.error('Error deleting response: ', error);
+        if (error !== undefined) {setResponseOutput(error.response.data.error.error.message);}
+        setResponseMessage('Respuesta no ha sido eliminada.');
+      }
+    } else { return; } 
+  }
 
   //Get Responses
   useEffect(() => {
@@ -125,7 +189,7 @@ export default function Response(props) {
       }
     };
     fetchResponses();
-  }, []);
+  }, [responseOutput, updateResponsesLog]);
 
   // Show & Store Response output
   useEffect(() => {
@@ -139,6 +203,7 @@ export default function Response(props) {
               },        
             });
             console.log(responseinsert);
+            setUpdateResponsesLog(!updateResponsesLog);
           }
           catch (error) {}
       }
@@ -147,11 +212,19 @@ export default function Response(props) {
     if ((responseOutput !== null) && (responseOutput !== undefined)) {
       console.log('Response Output:', responseOutput, typeof responseOutput);
       if (typeof responseOutput === "string") { setShowResponse(responseOutput) }
-      else if (typeof responseOutput === "object") {
-        if (omodels.includes(model) || filtertemptopp.includes(model)) {
-          setShowResponse(responseOutput.output[1].content[0].text);
+      else if (typeof responseOutput === "object" && "output" in responseOutput) {
+        if (Array.isArray(responseOutput.output)) {
+          for (const o of responseOutput.output) {
+            if ("content" in o) {
+              if (o.content[0] !== undefined && o.content[0] !== null) {
+                if ("text" in o.content[0]) {
+                  setShowResponse(o.content[0].text)
+                }                
+              }
+            }
+          }
         }
-        else { setShowResponse(responseOutput.output[0].content[0].text) }
+        else { setShowResponse('Response Output is not an Array') }   
       }
       else { setShowResponse('Response type unknown') }
       insertResponse();
@@ -177,12 +250,12 @@ export default function Response(props) {
                   {showResponse}
                 </pre>
               </div>                        
-              <label htmlFor="input" className="form-label">Mensaje</label>
+              <label htmlFor="input" className="form-label">Mensaje (Text input)</label>
               <textarea className="form-control mb-1" id="input" rows="4"
                 value={input}
                 onChange={ e => {setInput(e.target.value)} }
               /> 
-              <label htmlFor="instructions" className="form-label">Instrucciones</label>
+              <label htmlFor="instructions" className="form-label">Instrucciones (Mensaje para insertar en el contexto del modelo)</label>
               <textarea className="form-control mb-1" id="instructions" rows="4"
                 value={instructions}
                 onChange={ e => {setInstructions(e.target.value)} }
@@ -271,7 +344,7 @@ export default function Response(props) {
                   <option value="gpt-5.5">gpt-5.5 | input $5/1M</option>
                   <option value="gpt-5.6-luna">gpt-5.6-luna | input $0.2/1M</option>
                   <option value="gpt-5.6-terra">gpt-5.6-terra | input $2/1M</option>
-                  <option value="gpt-5.6-sol">gpt-5.6-sol | input $5/1M</option>
+                  <option value="gpt-5.6-sol">gpt-5.6-sol | input $4/1M</option>
                   {/* <option value="gpt-5.5-pro">gpt-5.5-pro | input $30/1M</option> */}
                   {/* Add more model options here if needed */}
               </select>
@@ -282,6 +355,9 @@ export default function Response(props) {
                   setInclude(selected);
                 }}
               >
+                <option value="web_search_call.action.sources">
+                  web_search_call.action.sources
+                </option>
                 <option value="code_interpreter_call.outputs">
                   code_interpreter_call.outputs
                 </option>
@@ -294,9 +370,9 @@ export default function Response(props) {
                 <option value="message.input_image.image_url">
                   message.input_image.image_url                          
                 </option>
-                <option value="message.output_text.logprobs">
+                {/*<option value="message.output_text.logprobs">
                   message.output_text.logprobs
-                </option>
+                </option>*/}
                 <option value="reasoning.encrypted_content">
                   reasoning.encrypted_content
                 </option>
@@ -331,7 +407,7 @@ export default function Response(props) {
                 onChange={ e => {setToolsStr(e.target.value)} }>
               </textarea>
               <small className="form-text text-muted">
-                <pre>{`[{"type":"code_interpreter", "container":{ CodeInterpreterContainerAuto:{"type":"auto", "file_ids": []}}}},\n{"type":"function", "function":{"name":"FunctionName", "parameters":{"type":"object","properties":{"query":{"type":"string", "description":"question"}}}}},\n{"type":"web_search_preview_2025_03_11"}]`}</pre>
+                <pre>{`[{"type":"code_interpreter", "container":{ CodeInterpreterContainerAuto:{"type":"auto", "file_ids": []}}}},\n{"type":"function", "function":{"name":"FunctionName", "parameters":{"type":"object","properties":{"query":{"type":"string", "description":"question"}}}}},\n{"type":"web_search"}]`}</pre>
               </small>
               <label htmlFor="tool_choice" className="form-label">Cómo usar las herramientas</label>
               <textarea className="form-control" id="tool_choice" rows="1" 
@@ -346,6 +422,9 @@ export default function Response(props) {
                 value={metadataStr}
                 onChange={ e => {setMetadataStr(e.target.value)} }>
               </textarea>
+              <small className="form-text text-muted">
+                <pre>{`{"key1": "value1", "key2": "value2"}`}</pre>
+              </small>
             </div>                
           </div>                        
         </form>
@@ -359,7 +438,7 @@ export default function Response(props) {
           <ul className="list-group" id="responses_list">
             <li className="list-group-item"><pre>Id | Fecha | Metadata</pre></li>
             {responsesLog.map((resp, index) => (
-              <li key={index} className="list-group-item" onClick={() => console.log('Click on Response')}>
+              <li key={index} className="list-group-item" onClick={() => handleResponseClick(resp.id)}>
                 <pre>{resp.id} | {convertToDate(resp.created_at)} | {JSON.stringify(resp.metadata)}</pre>
               </li>
             ))}

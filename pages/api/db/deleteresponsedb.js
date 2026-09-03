@@ -11,7 +11,7 @@ export default async function handler(req, res) {
     const collection = 'responses';
 
     if (req.method === 'POST') {
-        const filter = req.body.filter; // filter = { responseid: 'resp_123'}
+        const filter = req.body.filter; // filter = { id: 'resp_123'}
         // console.log(collection, newThread);
         
         try {

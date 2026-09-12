@@ -1,3 +1,7 @@
+/*
+Deprecated
+*/
+
 import { Fragment } from 'react';
 import Head from "next/head";
 
@@ -117,8 +121,3 @@ export async function getStaticProps() {
     },
   };
 }
-
-/*
-To Do:
-href
-*/

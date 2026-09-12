@@ -5,6 +5,8 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 import MarkdownIt from 'markdown-it';
 
+import Base64Image from './base64image';
+
 const MessagesDiv = ({ messages }) => {
 	const copyToClipboard = (text) => {
     	const textarea = document.createElement('textarea');
@@ -139,17 +141,20 @@ const MessagesDiv = ({ messages }) => {
 							<a href={ msg.url === undefined ? '#' : msg.url} target="_blank">
 							<Image
 								src={ msg.url === undefined ? '#' : msg.url} // Ruta de la imagen
-								alt="Dall-E Image" // Descripción para accesibilidad
-								/*layout="responsive"
-								width={10}  Ancho deseado
-								height={10}  Alto deseado */
+								alt="Dall-E Image"
 								fill
 								sizes="(max-width: 160px) 100vw, 100px"
 							/>
 							</a>
 						</div> 
-						) 
-					}																
+					)}
+					{!(msg.images === undefined) && (
+						msg.images.map((i, index) => (
+							<div key={index} className="col-6 col-md-4 col-lg-2 my-2">
+								<Base64Image b64_json={i.b64_json}/>
+							</div>
+						))
+					)}																
 				</div> 
 				)
 			)} 

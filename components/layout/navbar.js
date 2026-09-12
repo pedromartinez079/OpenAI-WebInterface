@@ -35,7 +35,7 @@ export default function NavBar(props) {
                                 <li><hr className="dropdown-divider" /></li>
                                 <li><a className="dropdown-item" href={'/chat'}>Chat GPT</a></li>
                                 <li><hr className="dropdown-divider" /></li>
-                                <li><a className="dropdown-item" href={'/dalle'}>Dall-E</a></li>
+                                <li><a className="dropdown-item" href={'/image'}>GPT Image</a></li>
                                 <li><hr className="dropdown-divider" /></li>
                                 {/*<li><a className="dropdown-item" href={'/assistants'}>Asistentes</a></li>
                                 <li><hr className="dropdown-divider" /></li>*/}

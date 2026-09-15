@@ -5,7 +5,7 @@ export default function ModalFileContent (props) {
     const showModalFileContent = props.showModalFileContent;
     const setShowModalFileContent = props.setShowModalFileContent;
 
-    let content = filecontent;
+    let content = filecontent; // file content raw data, from here detect the type of content
     if (typeof filecontent === 'object' && filecontent !== null) {
       content = JSON.stringify(filecontent);
     }

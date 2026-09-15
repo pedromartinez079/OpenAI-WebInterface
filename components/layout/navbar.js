@@ -41,6 +41,8 @@ export default function NavBar(props) {
                                 <li><hr className="dropdown-divider" /></li>*/}
                                 <li><a className="dropdown-item" href={'/response'}>Respuestas IA</a></li>
                                 <li><hr className="dropdown-divider" /></li>
+                                <li><a className="dropdown-item" href={'/files'}>Archivos</a></li>
+                                <li><hr className="dropdown-divider" /></li>
                             </ul>
                         </li>
                         <li className="nav-item dropdown">

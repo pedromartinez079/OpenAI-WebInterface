@@ -1,9 +1,5 @@
 /*
 To DO:
-    Detect and show images on the fly in components/layout/modalfilecontent.js
-    Vector Store
-        https://platform.openai.com/docs/api-reference/vector-stores
-        https://platform.openai.com/docs/api-reference/vector-stores-files
 */
 
 import { Fragment } from 'react';

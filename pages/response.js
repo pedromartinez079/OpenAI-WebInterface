@@ -2,6 +2,8 @@
 To Do:
 - instruction: system or developer message inserted in model's context
 - input(Mensaje): string or array of objects (text, image, file, conversation state, function calling)
+    - image as an input > add a control to upload image base64Image
+    - In Files add a control to upload images purpose: "vision"
 - context_management ?
 - conversation (include response as a part of a pre-defined conversation)
 - stream uses stream_options
@@ -456,10 +458,3 @@ export async function getStaticProps() {
       },
     };
   }
-  
-  /*
-    Create model response
-    Get model response
-    Delete model response
-    models? o1-pro....
-  */
